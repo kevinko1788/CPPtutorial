@@ -14,6 +14,11 @@ struct Timer{
     }
 };
 int main(){
+
+    //2D array performance test
+    // 1. allocate memory
+    // 2. assign values
+    // 3. delete
     {
         Timer time;
         int** a2d = new int*[5];
@@ -26,12 +31,15 @@ int main(){
                 a2d[i][j] = 2;
             }
         }
-        //deleting
+        //deleting 2D
         for (int i = 0; i < 5; i++){
             delete[] a2d[i];
         }
         delete[] a2d;
     }
+
+
+    // make it 1D
     {
         Timer time;
         int* array = new int[5 * 5];
@@ -41,6 +49,7 @@ int main(){
                 array[j + i * 5] = 2;
             }
         }
+        //delete 1D array
         delete[] array;
     }
 }
