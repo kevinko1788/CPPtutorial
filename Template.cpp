@@ -14,7 +14,7 @@ void print(float value){
     std::cout << value << std::endl;
 }
 */
-/*
+
 template <typename T>
 void print(T value){
     std::cout << value << std::endl;
@@ -25,7 +25,6 @@ int main(){
     print("123");
     print(1.02f);
 }
-*/
 
 #include <iostream>
 
