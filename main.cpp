@@ -1,45 +1,31 @@
 #include <iostream>
-#define LOG(x) std::cout << x << std::endl
-class Log
-{
-public:
-    const int LogLevelInfo = 0;
-    const int LogLevelWarning = 1;
-    const int LogLevelError = 2;
-
-private:
-    int m_logLevel = LogLevelError;
-
-public:
-    void SetLevel(int level)
-    {
-        m_logLevel = level;
-    }
-
-    void Info(const char* message)
-    {
-      if (m_logLevel <= LogLevelInfo)
-            std::cout << "[Info]: " << message << std::endl;
-    }
-
-    void Warn(const char* message)
-    {
-        if (m_logLevel <= LogLevelWarning)
-            std::cout << "[Warning]: " << message << std::endl;
-    }
-
-    void Error(const char* message)
-    {
-        if (m_logLevel <= LogLevelError)
-            std::cout << "[Error]: " << message << std::endl;
-    }
-};
+#include <sys/socket.h>
+#include <sys/types.h>
+#include <netdb.h>
+#include <string.h>
+#include <string>
+#include <unistd.h>
+#include <arpa/inet.h>
 
 int main()
 {
-    Log log;
-    log.SetLevel(log.LogLevelError);
-    log.Info("Hello World");
-    log.Warn("Hello World");
-    log.Error("Hello World");
+    //create socket
+    int listening = socket(AF_INET, SOCK_STREAM, 0);
+    if (listening == -1)
+    {
+        std::cerr << "Can't create a socket!";
+        return -1;
+    }
+
+    //Bind the socket to a IP / port
+    sockaddr_in hint;
+    hint.sin_family = AF_INET;
+    hint.sin_port = htons(54000);
+    inet_pton(AF_INET, "0.0.0.0", &hint.sin_addr);
+
+    if (bind(AF_INET, &hint, sizeof(hint)) == -1)
+    {
+        std::cerr << "Can't bind to IP/port";
+        return -2;
+    }
 }
